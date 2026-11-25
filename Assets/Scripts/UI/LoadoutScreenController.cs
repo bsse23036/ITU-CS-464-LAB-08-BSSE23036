@@ -40,24 +40,34 @@ public class LoadoutScreenController : MonoBehaviour
 
     public void SelectSuit(int index)
     {
-        if (index < 0 || index >= suitNames.Length) return;
+        if (index < 0 || index >= suitNames.Length || ViceGameData.Instance == null) return;
         string target = suitNames[index];
 
         if (ViceGameData.Instance.ownedItems.Contains(target))
+        {
             ViceGameData.Instance.EquipSuit(target);
+            UIAudioPlayer.Instance?.PlaySuccess();
+        }
         else
-            UIManager.Instance.NavigateTo("Shop");
+        {
+            UIManager.Instance?.NavigateTo("Shop");
+        }
     }
 
     public void SelectGadget(int index)
     {
-        if (index < 0 || index >= gadgetNames.Length) return;
+        if (index < 0 || index >= gadgetNames.Length || ViceGameData.Instance == null) return;
         string target = gadgetNames[index];
 
         if (ViceGameData.Instance.ownedItems.Contains(target))
+        {
             ViceGameData.Instance.EquipGadget(target);
+            UIAudioPlayer.Instance?.PlaySuccess();
+        }
         else
-            UIManager.Instance.NavigateTo("Shop");
+        {
+            UIManager.Instance?.NavigateTo("Shop");
+        }
     }
 
     public void RefreshUI()

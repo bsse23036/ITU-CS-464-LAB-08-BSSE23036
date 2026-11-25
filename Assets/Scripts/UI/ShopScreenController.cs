@@ -57,10 +57,12 @@ public class ShopScreenController : MonoBehaviour
 
         if (ViceGameData.Instance.TryPurchaseItem(item, cost))
         {
+            UIAudioPlayer.Instance?.PlaySuccess();
             ShowToast($"PURCHASED: {item} (-${cost:N0})", new Color32(34, 197, 94, 255));
         }
         else
         {
+            UIAudioPlayer.Instance?.PlayError();
             ShowToast($"INSUFFICIENT VICE CASH (NEED ${cost:N0})", new Color32(239, 68, 68, 255));
         }
     }

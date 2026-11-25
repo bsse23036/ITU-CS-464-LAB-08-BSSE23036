@@ -1,45 +1,106 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class UIButtonFeedback : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class UIButtonFeedback : MonoBehaviour,
+    IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, ISelectHandler
 {
-    [SerializeField] private float pressedScale = 0.94f;
-    [SerializeField] private float pressDuration = 0.08f;
-    [SerializeField] private float releaseDuration = 0.16f;
+    public enum ButtonSoundRole
+    {
+        Standard,
+        Back,
+        Silent
+    }
+
+    [Header("Audio Role")]
+    [SerializeField] private ButtonSoundRole soundRole = ButtonSoundRole.Standard;
 
     private Button button;
-    private Coroutine activeTween;
+    private Vector3 originalScale;
+    private Coroutine scaleRoutine;
 
     private void Awake()
     {
         button = GetComponent<Button>();
+        originalScale = transform.localScale;
+    }
+
+    private void OnEnable()
+    {
+        transform.localScale = originalScale;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (button != null && !button.interactable) return;
+        if (soundRole != ButtonSoundRole.Silent)
+            UIAudioPlayer.Instance?.PlayHover();
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (button != null && !button.interactable) return;
+        if (soundRole != ButtonSoundRole.Silent)
+            UIAudioPlayer.Instance?.PlayHover();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (button != null && !button.interactable) return;
-        RunScaleTween(Vector3.one * pressedScale, pressDuration, EaseType.OutCubic);
+
+        if (soundRole == ButtonSoundRole.Back)
+            UIAudioPlayer.Instance?.PlayBack();
+        else if (soundRole == ButtonSoundRole.Standard)
+            UIAudioPlayer.Instance?.PlayClick();
+
+        AnimateScale(originalScale * 0.94f, 0.08f, false);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (button != null && !button.interactable) return;
-        RunScaleTween(Vector3.one, releaseDuration, EaseType.OutBack);
+        AnimateScale(originalScale, 0.16f, true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (transform.localScale != Vector3.one)
-        {
-            RunScaleTween(Vector3.one, releaseDuration, EaseType.OutCubic);
-        }
+        AnimateScale(originalScale, 0.14f, false);
     }
 
-    private void RunScaleTween(Vector3 targetScale, float duration, EaseType ease)
+    private void AnimateScale(Vector3 target, float duration, bool useOutBack)
     {
-        if (activeTween != null) StopCoroutine(activeTween);
-        activeTween = UITweener.TweenScale(this, transform, transform.localScale, targetScale, duration, ease);
+        if (scaleRoutine != null) StopCoroutine(scaleRoutine);
+        scaleRoutine = StartCoroutine(ScaleRoutine(target, duration, useOutBack));
+    }
+
+    private IEnumerator ScaleRoutine(Vector3 target, float duration, bool useOutBack)
+    {
+        Vector3 start = transform.localScale;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float eased = useOutBack ? EvaluateOutBack(t) : EvaluateOutCubic(t);
+            transform.localScale = Vector3.LerpUnclamped(start, target, eased);
+            yield return null;
+        }
+
+        transform.localScale = target;
+    }
+
+    private static float EvaluateOutCubic(float t)
+    {
+        float inv = 1f - t;
+        return 1f - inv * inv * inv;
+    }
+
+    private static float EvaluateOutBack(float t)
+    {
+        const float c1 = 1.70158f;
+        const float c3 = c1 + 1f;
+        float x = t - 1f;
+        return 1f + c3 * x * x * x + c1 * x * x;
     }
 }

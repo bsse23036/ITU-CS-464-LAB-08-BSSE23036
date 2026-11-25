@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5287848547780682562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3477543412189107493}
+  - component: {fileID: 2775078419224783615}
+  - component: {fileID: 3234644743291723205}
+  m_Layer: 0
+  m_Name: PersistentAudioRig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3477543412189107493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287848547780682562}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2775078419224783615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287848547780682562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f734a15f410a412478b9b1a630de6728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioMixerManager
+  gameMixer: {fileID: 24100000, guid: b0e81a948ffab364dafc79402e9f11a4, type: 2}
+--- !u!114 &3234644743291723205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287848547780682562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b60035c2236560488279e486a2a8124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAudioPlayer
+  uiMixerGroup: {fileID: 7105462466336852453, guid: b0e81a948ffab364dafc79402e9f11a4, type: 2}
+  hoverClip: {fileID: 8300000, guid: 91548d7253a35d944856e39714d58ee2, type: 3}
+  clickClip: {fileID: 8300000, guid: c1b73cd72ecbc1b4f981754813502c7e, type: 3}
+  backClip: {fileID: 8300000, guid: d978e7f70da2040458a8542c51153620, type: 3}
+  panelClip: {fileID: 8300000, guid: f79750f9b7113a4499e4ae240456c632, type: 3}
+  pauseClip: {fileID: 8300000, guid: 4ade6b90c1b0b6b4085ff8a906dc9867, type: 3}
+  resumeClip: {fileID: 8300000, guid: 819a8a9daa283394b8c4893c767f25cb, type: 3}
+  successClip: {fileID: 8300000, guid: 98e01a50862590b4eacef0323457fa30, type: 3}
+  errorClip: {fileID: 8300000, guid: 2ec551a13d250c44987d51284f3ca825, type: 3}
+  hoverPitchJitter: 0.04

@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
     public static bool IsPaused { get; private set; }
 
-    [Header("All 10 Registered Screens")]
+    [Header("All Registered Screens")]
     [SerializeField] private List<UIScreen> screens = new List<UIScreen>();
 
     [Header("Initial Entry Screen ID")]
@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         IsPaused = false;
+        AudioListener.pause = false;
 
         if (!string.IsNullOrEmpty(startingScreenId) && screenLookup.ContainsKey(startingScreenId))
         {
@@ -94,7 +95,6 @@ public class UIManager : MonoBehaviour
     {
         if (navigationHistory.Count == 0)
         {
-            // Fallback safety: never leave user stranded
             if (currentScreenId != "MainMenu" && screenLookup.ContainsKey("MainMenu"))
             {
                 NavigateRoot("MainMenu");
@@ -129,9 +129,25 @@ public class UIManager : MonoBehaviour
 
     private void SwitchToScreen(string targetId, bool isForward)
     {
+        string previousId = currentScreenId;
         currentScreenId = targetId;
+
         UIScreen targetScreen = screenLookup[targetId];
         targetScreen.AnimateIn(isForward);
+
+        // Trigger dedicated panel / pause / resume UI audio
+        if (targetId == "Pause")
+        {
+            UIAudioPlayer.Instance?.PlayPause();
+        }
+        else if (previousId == "Pause" && targetId == "Gameplay")
+        {
+            UIAudioPlayer.Instance?.PlayResume();
+        }
+        else if (targetId == "Results" || previousId == "Results")
+        {
+            UIAudioPlayer.Instance?.PlayPanelToggle();
+        }
 
         // Manage pause clock & audio when entering/exiting Pause or Results
         bool shouldPause = (targetId == "Pause" || targetId == "Results");
