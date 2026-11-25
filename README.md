@@ -35,7 +35,7 @@ Both scenes are registered in **File → Build Profiles → Scene List**:
 
 ### 1. 4-Group Audio Mixer (`GameMixer`) & Persistence (`AudioMixerManager.cs`)
 
-![GameMixer Audio Mixer](docs/audio-mixer.png)
+![GameMixer Audio Mixer](Docs/audio-mixer.png)
 
 All audio sources route through **`GameMixer`** with exposed attenuation parameters persisted via `PlayerPrefs`:
 
