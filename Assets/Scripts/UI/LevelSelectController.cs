@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelectController : MonoBehaviour
 {
@@ -21,9 +22,25 @@ public class LevelSelectController : MonoBehaviour
             ViceGameData.Instance.selectedDistrict = districtLabel;
         }
 
-        if (SceneLoader.Instance != null)
+        SceneLoader loader = SceneLoader.Instance;
+        if (loader == null)
         {
-    SceneLoader.Instance.LoadGameplayScene("GameplayScene");
+            loader = FindFirstObjectByType<SceneLoader>(FindObjectsInactive.Include);
+        }
+
+        if (loader != null)
+        {
+            // Ensure the GameObject hosting SceneLoader is active so StartCoroutine can run
+            if (!loader.gameObject.activeInHierarchy)
+            {
+                loader.gameObject.SetActive(true);
+            }
+            loader.LoadGameplayScene("GameplayScene");
+        }
+        else
+        {
+            Debug.LogWarning("SceneLoader not found in MainMenuScene. Loading GameplayScene directly.");
+            SceneManager.LoadScene("GameplayScene");
         }
     }
 }

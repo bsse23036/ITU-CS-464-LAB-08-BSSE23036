@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3477543412189107493}
   - component: {fileID: 2775078419224783615}
   - component: {fileID: 3234644743291723205}
+  - component: {fileID: 7206975264917010796}
+  - component: {fileID: 6875458591594943147}
   m_Layer: 0
   m_Name: PersistentAudioRig
   m_TagString: Untagged
@@ -68,3 +70,44 @@ MonoBehaviour:
   successClip: {fileID: 8300000, guid: 98e01a50862590b4eacef0323457fa30, type: 3}
   errorClip: {fileID: 8300000, guid: 2ec551a13d250c44987d51284f3ca825, type: 3}
   hoverPitchJitter: 0.04
+--- !u!114 &7206975264917010796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287848547780682562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231dfd28cdf3b5a4fb11750ad7baa965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SfxPlayer
+  sfxMixerGroup: {fileID: 7526060403149506819, guid: b0e81a948ffab364dafc79402e9f11a4, type: 2}
+  poolSize: 6
+  pitchRangeSemitones: 2
+  minVolumeScale: 0.85
+  pickupClip: {fileID: 8300000, guid: 8fb79ea5972d9e04ea9da18abb3eaf0a, type: 3}
+  grappleBoostClip: {fileID: 8300000, guid: eed4823c74e77724a8f4ad6729566b42, type: 3}
+  laserAttackClip: {fileID: 8300000, guid: 9426ab2dc2d05244db9747356c6937f0, type: 3}
+  hurtDamageClip: {fileID: 8300000, guid: 4f60fa3ee576ee1448c39b411d9d6149, type: 3}
+  deathClip: {fileID: 8300000, guid: 6135ebdeeb9be1f4e8ecf4071afcfa36, type: 3}
+  winClip: {fileID: 8300000, guid: 68c2b5e66e7bd2f458d8855ff22014aa, type: 3}
+  loseClip: {fileID: 8300000, guid: ad1a52788b6b4b247ba2c1dce7017866, type: 3}
+--- !u!114 &6875458591594943147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287848547780682562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10bdccd5ddcbc134d9f492613214d748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
+  musicMixerGroup: {fileID: 702113979639301712, guid: b0e81a948ffab364dafc79402e9f11a4, type: 2}
+  menuTrack: {fileID: 8300000, guid: 0bf42a633f4e4ff4bace083d1ba7f876, type: 3}
+  patrolTrack: {fileID: 8300000, guid: bbe637ee0af527146881dae211815ccb, type: 3}
+  combatTrack: {fileID: 8300000, guid: fe35a7462ed0adf4c8cb8ae67f6d7ab1, type: 3}
+  resultsTrack: {fileID: 0}
+  crossfadeSeconds: 1.2

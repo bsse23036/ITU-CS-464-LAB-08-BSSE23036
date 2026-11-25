@@ -51,6 +51,11 @@ public class ViceGameData : MonoBehaviour
         OnDataChanged?.Invoke();
         return true;
     }
+    public void AddRewards(int cashAmount, int gemAmount = 0)
+    {
+        viceCash += cashAmount;
+        OnDataChanged?.Invoke();
+    }
 
     public void EquipSuit(string suitName)
     {
