@@ -21,9 +21,9 @@ public class LevelSelectController : MonoBehaviour
             ViceGameData.Instance.selectedDistrict = districtLabel;
         }
 
-        if (UIManager.Instance != null)
+        if (SceneLoader.Instance != null)
         {
-            UIManager.Instance.NavigateTo("Gameplay");
+    SceneLoader.Instance.LoadGameplayScene("GameplayScene");
         }
     }
 }
